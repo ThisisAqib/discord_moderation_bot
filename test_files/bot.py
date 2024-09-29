@@ -47,6 +47,12 @@ async def on_ready():
     logger.info("Bot is ready. Logged in as %s", bot.user)
     await load_extensions()
 
+    # Uncomment these if you want to run the testers
+    # asyncio.create_task(testers.channels_tester(bot))
+    # asyncio.create_task(testers.guilds_tester(bot))
+    # asyncio.create_task(testers.messages_tester(bot))
+    # asyncio.create_task(testers.members_tester(bot))
+
 
 async def main():
     """Run the bot and handle any shutdowns or reloads."""

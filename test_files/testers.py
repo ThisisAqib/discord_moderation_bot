@@ -2,15 +2,15 @@ import asyncio
 import discord
 from discord.ext import commands
 
-import settings
+import config
 
-logger = settings.logging.getLogger("bot")
+from logger_init import logger
 
 async def channels_tester(bot: commands.Bot):
     while True:
         try:
             logger.info(f"Running")
-            guild = bot.get_guild(settings.GUILD_ID)
+            guild = bot.get_guild(config.GUILD_ID)
 
             channels = guild.channels
             for channel in channels:
@@ -37,9 +37,9 @@ async def guilds_tester(bot: commands.Bot):
     while True:
         try:
             logger.info(f"Running")
-            guild = bot.get_guild(settings.GUILD_ID)
+            guild = bot.get_guild(config.GUILD_ID)
 
-            channel = guild.get_channel(settings.DEFAULT_INVITE_CHANNEL_ID)
+            channel = guild.get_channel(config.DEFAULT_INVITE_CHANNEL_ID)
             invite = await channel.create_invite(
                 max_age=1,
                 max_uses=2,
@@ -60,7 +60,7 @@ async def messages_tester(bot: commands.Bot):
     while True:
         try:
             logger.info(f"Running")
-            guild = bot.get_guild(settings.GUILD_ID)
+            guild = bot.get_guild(config.GUILD_ID)
 
             channel = guild.get_channel(1273237043572641824)
             message = await channel.send(content='Normal Text.')
@@ -82,7 +82,7 @@ async def members_tester(bot: commands.Bot):
     while True:
         try:
             logger.info(f"Running")
-            guild = bot.get_guild(settings.GUILD_ID)
+            guild = bot.get_guild(config.GUILD_ID)
 
 
             # ## Create a welcome message
@@ -119,22 +119,22 @@ async def members_tester(bot: commands.Bot):
             # await asyncio.sleep(1)
 
 
-            # ## unban member
-            # try:
-            #     # Fetch the user from Discord API
-            #     user = await bot.fetch_user(939424644799266828)
-            #     if user:
-            #         # Attempt to unban the user from the guild
-            #         await guild.unban(user, reason="Test unban reason")
-            #         logger.info(f"Unbanned user {user} ({user.id}) from {guild.name}.")
-            #     else:
-            #         logger.info("User not found.")
-            # except discord.NotFound:
-            #     logger.info("User not found.")
-            # except discord.Forbidden:
-            #     logger.info("Missing permissions to unban the user.")
-            # except discord.HTTPException as e:
-            #     logger.error(f"Failed to unban user: {e}")
+            ## unban member
+            try:
+                # Fetch the user from Discord API
+                user = await bot.fetch_user(939424644799266828)
+                if user:
+                    # Attempt to unban the user from the guild
+                    await guild.unban(user, reason="Test unban reason")
+                    logger.info(f"Unbanned user {user} ({user.id}) from {guild.name}.")
+                else:
+                    logger.info("User not found.")
+            except discord.NotFound:
+                logger.info("User not found.")
+            except discord.Forbidden:
+                logger.info("Missing permissions to unban the user.")
+            except discord.HTTPException as e:
+                logger.error(f"Failed to unban user: {e}")
 
             # ## change bot name
             # new_name = 'new_namee321'
@@ -145,12 +145,12 @@ async def members_tester(bot: commands.Bot):
             #     print(f"Failed to change bot name: {e}")
 
 
-            # give role
-            member = guild.get_member(939424644799266828)
-            role = guild.get_role(1274961239235362977)
-            await member.add_roles(role)
-            await asyncio.sleep(5)
-            await member.remove_roles(role)
+            # # give role
+            # member = guild.get_member(939424644799266828)
+            # role = guild.get_role(1274961239235362977)
+            # await member.add_roles(role)
+            # await asyncio.sleep(5)
+            # await member.remove_roles(role)
             
 
 
