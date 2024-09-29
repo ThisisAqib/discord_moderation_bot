@@ -132,3 +132,4 @@ venv/*
 .env
 
 bot.db
+test_files/
